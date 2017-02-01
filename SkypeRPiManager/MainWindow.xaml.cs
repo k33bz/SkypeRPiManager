@@ -23,15 +23,28 @@ namespace SkypeRPiManager
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
-
+    
     public partial class MainWindow : Window
     {
         RPi RPi;
+
         public MainWindow()
         {
             InitializeComponent();
             RPi = new RPi();
             DataContext = RPi;
+
+            //tray
+            System.Windows.Forms.NotifyIcon ni = new System.Windows.Forms.NotifyIcon();
+            ni.Icon = new System.Drawing.Icon(@"C:\Users\k33bz\Source\Repos\SkypeRPiManager\SkypeRPiManager\pihole512favicon-551709dfv1_site_icon.ico");
+            ni.Visible = true;
+            ni.DoubleClick +=
+                delegate (object sender, EventArgs args)
+                {
+                    this.Show();
+                    this.WindowState = WindowState.Normal;
+                };
+            //end tray
 
             textBoxServer.Text = RPi.GetServer();
             textBoxPort.Text = RPi.GetPort().ToString();
@@ -39,7 +52,15 @@ namespace SkypeRPiManager
             RPi.sendData(RPi.getStatus());
 
         }
+        //tray
+        protected override void OnStateChanged(EventArgs e)
+        {
+            if (WindowState == WindowState.Minimized)
+                this.Hide();
 
+            base.OnStateChanged(e);
+        }
+        //end tray
         private void button_Click(object sender, RoutedEventArgs e)
         {
             //RPi.SetServer(textBoxServer.Text.ToString());
@@ -51,6 +72,7 @@ namespace SkypeRPiManager
                 Debug.WriteLine(RPi.GetServer() + ":" + RPi.GetPort());
 
                 RPi.sendData("testing");
+
             }
             catch (FormatException ex)
             {

@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:SkypeRPiManager"
         xmlns:controls="clr-namespace:Microsoft.Lync.Controls;assembly=Microsoft.Lync.Controls" x:Class="SkypeRPiManager.MainWindow"
         mc:Ignorable="d"
-        Title="Skype RPi Manager" Height="140" Width="240">
+        
+        Title="Skype RPi Manager" Height="140" Width="240" Icon="pihole512favicon-551709dfv1_site_icon.ico" ResizeMode="CanMinimize" WindowState="Minimized">
     <Grid>
         <controls:PresenceIndicator x:Name="Presence"  HorizontalAlignment="Left" Margin="16,24,0,0" VerticalAlignment="Top" Source="{Binding SelfSipAddress}" Height="16" Width="16"/>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="37,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" Text="{Binding DisplayName, ElementName=Presence}"></TextBlock>
