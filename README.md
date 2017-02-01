@@ -1,2 +1,2 @@
 # SkypeRPiManager
-Skypt to Raspberry Pi Status Manager
+Skype to Raspberry Pi Status Manager
