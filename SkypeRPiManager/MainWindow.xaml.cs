@@ -36,7 +36,6 @@ namespace SkypeRPiManager
             textBoxServer.Text = RPi.GetServer();
             textBoxPort.Text = RPi.GetPort().ToString();
 
-            RPi.sendData("testing...");
             RPi.sendData(RPi.getStatus());
 
         }
@@ -51,7 +50,7 @@ namespace SkypeRPiManager
 
                 Debug.WriteLine(RPi.GetServer() + ":" + RPi.GetPort());
 
-                RPi.sendData(RPi.getStatus());
+                RPi.sendData("testing");
             }
             catch (FormatException ex)
             {
@@ -67,7 +66,7 @@ namespace SkypeRPiManager
         public string SelfSipAddress { get; private set; }
         private string message;
         private int PORT_NO = 5000;
-        private string SERVER_IP = "192.168.11.125";
+        private string SERVER_IP = "raspberrypi";
 
 
         public RPi()
@@ -157,8 +156,6 @@ namespace SkypeRPiManager
 
         public string sendData(string message)
         {
-            //int PORT_NO = 5000;
-            //string SERVER_IP = "192.168.11.125";
 
             if (this.message != message)
             {

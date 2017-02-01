@@ -28,7 +28,7 @@
     <SupportUrl>http://www.k33bz.com</SupportUrl>
     <ProductName>Skype RPi Manager</ProductName>
     <PublisherName>Matthew Kastro</PublisherName>
-    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
