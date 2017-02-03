@@ -17,6 +17,7 @@ server.listen(1)
 
 def handle(conn):
     conn.send(b'hello')
+    
     while 1:
         try:
             data = conn.recv(1024).decode()
@@ -47,15 +48,24 @@ def handle(conn):
                 ):
                 print('yellow\n')
                 strip.show()
+                colorWipe(strip, Color(0, 0, 0))  # Yellow wipe
                 colorWipe(strip, Color(255, 255, 0))  # Yellow wipe
+            elif (
+                    data == 'testing'
+                ):
+                print('testing\n')
+                rainbow(strip)
+                
             else:
                 print('ignoring data\n')
 
 
         except: #catch *all* exceptions
             conn.close()
-            
-        conn.close()
+        finally:
+            conn.close();
+        #conn.close()  
+    conn.close()
             
 # Define functions which animate LEDs in various ways.
 def colorWipe(strip, color, wait_ms=50):

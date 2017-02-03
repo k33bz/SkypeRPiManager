@@ -16,6 +16,7 @@ using Microsoft.Lync.Model;
 using System.ComponentModel;
 using System.Net.Sockets;
 using System.Diagnostics;
+using System.Drawing;
 
 namespace SkypeRPiManager
 {
@@ -27,7 +28,7 @@ namespace SkypeRPiManager
     public partial class MainWindow : Window
     {
         RPi RPi;
-
+ 
         public MainWindow()
         {
             InitializeComponent();
@@ -36,7 +37,8 @@ namespace SkypeRPiManager
 
             //tray
             System.Windows.Forms.NotifyIcon ni = new System.Windows.Forms.NotifyIcon();
-            ni.Icon = new System.Drawing.Icon(@"C:\Users\k33bz\Source\Repos\SkypeRPiManager\SkypeRPiManager\pihole512favicon-551709dfv1_site_icon.ico");
+
+            ni.Icon = new Icon("Resources/icon.ico");
             ni.Visible = true;
             ni.DoubleClick +=
                 delegate (object sender, EventArgs args)
@@ -63,7 +65,6 @@ namespace SkypeRPiManager
         //end tray
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            //RPi.SetServer(textBoxServer.Text.ToString());
             try
             {
                 RPi.SetServer(textBoxServer.Text.ToString());
@@ -88,12 +89,11 @@ namespace SkypeRPiManager
         public string SelfSipAddress { get; private set; }
         private string message;
         private int PORT_NO = 5000;
-        private string SERVER_IP = "raspberrypi";
+        private string SERVER_IP = "localhost";
 
 
         public RPi()
         {
-            Debug.WriteLine("Entering RPi");
             _client = LyncClient.GetClient();
             _client.StateChanged += _client_StateChanged;
             SubscribetoPresenceIfSignedIn(_client.State);
@@ -115,7 +115,15 @@ namespace SkypeRPiManager
             else
             {
                 //remove event handler (i.e. from previous logins etc)
-                //_client.Self.Contact.ContactInformationChanged -= Contact_ContactInformationChanged;
+                try
+                {
+                    _client.Self.Contact.ContactInformationChanged -= Contact_ContactInformationChanged;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+                //doesn't seem to work as intended
             }
         }
 
@@ -125,7 +133,7 @@ namespace SkypeRPiManager
             {
                 var activity = _client.Self.Contact.GetContactInformation(ContactInformationType.ActivityId);
 
-                // ContactAvailability availability = (ContactAvailability)_client.Self.Contact.GetContactInformation(ContactInformationType.Availability);
+                ContactAvailability availability = (ContactAvailability)_client.Self.Contact.GetContactInformation(ContactInformationType.Availability);
 
                 /* ContactAvailability
                  * 
@@ -157,6 +165,7 @@ namespace SkypeRPiManager
                  * In a meeting - "in-a-meeting"
                  * In a conference call - "in-a-conference"
                  */
+                sendData(activity.ToString().ToLower());
                 sendData(activity.ToString().ToLower());
                 
             }
@@ -202,8 +211,11 @@ namespace SkypeRPiManager
                     nwStream.Close();
                     TCPclient.Close();
                 }
-                catch (System.Net.Sockets.SocketException e) { Debug.WriteLine("Exception source: {0}", e.ToString()); }
-                catch (Exception e) { Debug.WriteLine("Something went wrong: {0}", e.ToString()); }
+                catch (System.Net.Sockets.SocketException ex) { Debug.WriteLine("Exception source: {0}", ex.ToString()); }
+                catch (Exception ex) {
+                    Debug.WriteLine("Something went wrong: {0}", ex.ToString());
+                    Debug.WriteLine(ex.Message);
+                }
             }
 
             return message;
