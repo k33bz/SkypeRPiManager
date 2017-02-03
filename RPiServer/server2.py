@@ -1,7 +1,7 @@
 import socket
 import threading
 import time
-from neopixel import *
+#from neopixel import *
 
 # LED strip configuration:
 LED_COUNT      = 50      # Number of LED pixels.
@@ -26,8 +26,8 @@ def handle(conn):
                 data == 'free'
                 ):
                 print('green\n')
-                strip.show()
-                colorWipe(strip, Color(0, 255, 0))  # Green wipe
+                #strip.show()
+                #colorWipe(strip, Color(0, 255, 0))  # Green wipe
             elif (
                     data == 'busy' or
                     data == 'on-the-phone' or
@@ -37,8 +37,8 @@ def handle(conn):
                     data == 'in-a-conference'
                 ):
                 print('red\n')
-                strip.show()
-                colorWipe(strip, Color(255, 0, 0))  # Red wipe
+                #strip.show()
+                #colorWipe(strip, Color(255, 0, 0))  # Red wipe
             elif (
                     data == 'berightback' or
                     data == 'inactive' or
