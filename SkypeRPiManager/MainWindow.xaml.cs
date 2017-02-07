@@ -89,7 +89,7 @@ namespace SkypeRPiManager
         public string SelfSipAddress { get; private set; }
         private string message;
         private int PORT_NO = 5000;
-        private string SERVER_IP = "localhost";
+        private string SERVER_IP = "raspberrypi";
 
 
         public RPi()
